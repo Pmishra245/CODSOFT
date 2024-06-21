@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 win = Tk()
 win.config(bg='#34eb9b')
@@ -24,17 +25,44 @@ label3.grid(row=2,column=0,pady=10,padx=10)
 ent3 = Entry(win,font=("Arial",20))
 ent3.grid(row=2,column=1,pady=10,padx=10)
 
+   
+def add():
+    num1 = float(ent2.get())
+    num2 = float(ent3.get())
+    add = num1 + num2
+    messagebox.showinfo("Result",f"Addition of {num1} and {num2} is {add}")
 
-add = Button(win,text="+",font=("Arial",20),bg='white')
+add = Button(win,text="+",font=("Arial",20),bg='white',command=add)
 add.grid(row=4,columnspan=1,padx=100,pady=10)
 
-sub = Button(win,text="-",font=("Arial",20),bg='White')
+
+def sub():
+    num1 = float(ent2.get())
+    num2 = float(ent3.get())
+    sub = num1 - num2
+    messagebox.showinfo("Result",f"Subtraction of {num1} and {num2} is {sub}")
+
+sub = Button(win,text="-",font=("Arial",20),bg='White',command=sub)
 sub.grid(row=4,columnspan=2,padx=10,pady=10)
 
-mul = Button(win,text="x",font=("Arial",20),bg='white')
+
+def mul():
+    num1 = float(ent2.get())
+    num2 = float(ent3.get())
+    mul = num1 * num2
+    messagebox.showinfo("Result",f"Multiplication of {num1} and {num2} is {mul}")
+
+mul = Button(win,text="x",font=("Arial",20),bg='white',command=mul)
 mul.grid(row=4,column=1,padx=70,pady=10)
 
-div = Button(win,text="/",font=("Arial",20),bg='white')
+
+def div():
+    num1 = float(ent2.get())
+    num2 = float(ent3.get())
+    div = num1 / num2
+    messagebox.showinfo("Result",f"Division of {num1} and {num2} is {div}")
+
+div = Button(win,text="/",font=("Arial",20),bg='white',command=div)
 div.grid(row=4,column=2,pady=10)
 
 win.mainloop()
