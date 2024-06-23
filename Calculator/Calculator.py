@@ -1,68 +1,69 @@
-from tkinter import *
-from tkinter import messagebox
+import tkinter as tk
+from tkinter.font import Font
 
-win = Tk()
-win.config(bg='#34eb9b')
-win.geometry ('800x600')
-win.resizable(0,0)
+def button_functions (num):#this function Handles the function when the button clicked
+    text = num.widget.cget("text")
+    if text == " = ":
+        try:
+            result = eval(operation_box.get())  
+            operation_box.delete(0, tk.END)
+            operation_box.insert(tk.END, str(result))
+        except Exception as e:
+            operation_box.delete(0, tk.END)
+            operation_box.insert(tk.END, "Error")
+    
+    elif text == "delete":
+        operation_box.delete(0, tk.END)
+    else:
+        operation_box.insert(tk.END, text)
+
+win = tk.Tk()
 win.title("Calculator")
+win.geometry("500x400")
+win.config(bg="#ced9d7")
 
-label1 = Label(win,text="CALCULATOR",font=("Arial",40))
-label1.config(fg='White',bg='#34eb9b')
-label1.grid(row=0,columnspan=2,pady=30)
+operation_box = tk.Entry(win, state="normal", font=("typewriter",30),justify="right")
+operation_box.grid(row = 0,column=0,columnspan=5,padx=100,pady=10)
+operation_box.bind("<Key>", lambda e: "break")
 
-label2 = Label(win,text="Enter First Number:",font=("Arial",20))
-label2.config(fg="Black",bg="#34eb9b")
-label2.grid(row=1,column=0,pady=10,padx=10)
 
-ent2 = Entry(win,font=("Arial",20))
-ent2.grid(row=1,column=1,pady=10,padx=10)
-
-label3 = Label(win,text="Enter Second Number:",font=("Arial",20))
-label3.config(fg='Black',bg='#34eb9b')
-label3.grid(row=2,column=0,pady=10,padx=10)
-
-ent3 = Entry(win,font=("Arial",20))
-ent3.grid(row=2,column=1,pady=10,padx=10)
-
+operation_buttons = (
    
-def add():
-    num1 = float(ent2.get())
-    num2 = float(ent3.get())
-    add = num1 + num2
-    messagebox.showinfo("Result",f"Addition of {num1} and {num2} is {add}")
+    "7","8", "9", "delete",
+    "4","5", "6", " * ",
+    "1","2", "3", " - ",
+    ".","0", " = ", " + " 
+)
 
-add = Button(win,text="+",font=("Arial",20),bg='white',command=add)
-add.grid(row=4,columnspan=1,padx=100,pady=10)
+c = 0  # column
+r = 1  # row
+button_index = 0
 
+while button_index < len(operation_buttons):
+    button_text = operation_buttons[button_index]
+    btn = tk.Button(win, text=button_text, font=("typewriter",20), padx=10, pady=10, width=10, height=6, bg="#f7faf9")
+    #grid helps to the buttons to place in their respective rows and columns
+    btn.grid(row=r, column=c, padx=5, pady=5)
+    c += 1
+    if c > 3:
+        c = 0
+        r += 1
+    button_index += 1
 
-def sub():
-    num1 = float(ent2.get())
-    num2 = float(ent3.get())
-    sub = num1 - num2
-    messagebox.showinfo("Result",f"Subtraction of {num1} and {num2} is {sub}")
+row_index = 1
+while row_index < 6:
+    win.grid_rowconfigure(row_index, weight=1)
+    row_index += 1
 
-sub = Button(win,text="-",font=("Arial",20),bg='White',command=sub)
-sub.grid(row=4,columnspan=2,padx=10,pady=10)
+column_index = 0
+while column_index < 4:
+    win.grid_columnconfigure(column_index, weight=1)
+    column_index += 1
 
-
-def mul():
-    num1 = float(ent2.get())
-    num2 = float(ent3.get())
-    mul = num1 * num2
-    messagebox.showinfo("Result",f"Multiplication of {num1} and {num2} is {mul}")
-
-mul = Button(win,text="x",font=("Arial",20),bg='white',command=mul)
-mul.grid(row=4,column=1,padx=70,pady=10)
-
-
-def div():
-    num1 = float(ent2.get())
-    num2 = float(ent3.get())
-    div = num1 / num2
-    messagebox.showinfo("Result",f"Division of {num1} and {num2} is {div}")
-
-div = Button(win,text="/",font=("Arial",20),bg='white',command=div)
-div.grid(row=4,column=2,pady=10)
+child_index = 0
+while child_index < len(win.winfo_children()):
+    btn = win.winfo_children()[child_index]
+    btn.bind("<Button-1>", button_functions)
+    child_index += 1
 
 win.mainloop()
