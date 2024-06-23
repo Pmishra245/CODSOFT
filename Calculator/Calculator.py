@@ -3,7 +3,7 @@ from tkinter.font import Font
 
 def button_functions (num):#this function Handles the function when the button clicked
     text = num.widget.cget("text")
-    if text == " = ":
+    if text == "=":
         try:
             result = eval(operation_box.get())  
             operation_box.delete(0, tk.END)
@@ -11,28 +11,33 @@ def button_functions (num):#this function Handles the function when the button c
         except Exception as e:
             operation_box.delete(0, tk.END)
             operation_box.insert(tk.END, "Error")
+    elif text == "C":
+        back = operation_box.get()
+        operation_box.delete(len(back)-1, tk.END)
     
-    elif text == "delete":
+    elif text == "AC":
         operation_box.delete(0, tk.END)
+
     else:
         operation_box.insert(tk.END, text)
 
+
 win = tk.Tk()
 win.title("Calculator")
-win.geometry("500x400")
-win.config(bg="#ced9d7")
+win.geometry("400x500")
+win.resizable(0,0)
+win.config(bg="#c8e099")
 
-operation_box = tk.Entry(win, state="normal", font=("typewriter",30),justify="right")
+operation_box = tk.Entry(win, state="normal", font=("typewriter",30),width=45,justify="right")
 operation_box.grid(row = 0,column=0,columnspan=5,padx=100,pady=10)
 operation_box.bind("<Key>", lambda e: "break")
 
-
 operation_buttons = (
-   
-    "7","8", "9", "delete",
-    "4","5", "6", " * ",
-    "1","2", "3", " - ",
-    ".","0", " = ", " + " 
+    "AC","**", "C", "/",
+    "7","8", "9", "*",
+    "4","5", "6", "-",
+    "1","2", "3", "+",
+    "00","0",".","="
 )
 
 c = 0  # column
@@ -41,7 +46,7 @@ button_index = 0
 
 while button_index < len(operation_buttons):
     button_text = operation_buttons[button_index]
-    btn = tk.Button(win, text=button_text, font=("typewriter",20), padx=10, pady=10, width=10, height=6, bg="#f7faf9")
+    btn = tk.Button(win, text=button_text, font=("typewriter",20),borderwidth=3 ,padx=10, pady=10, width=10, height=6, bg="#f7faf9")
     #grid helps to the buttons to place in their respective rows and columns
     btn.grid(row=r, column=c, padx=5, pady=5)
     c += 1
